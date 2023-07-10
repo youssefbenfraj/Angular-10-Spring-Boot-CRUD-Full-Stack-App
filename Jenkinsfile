@@ -3,6 +3,8 @@ pipeline{
   stages{
     stage('delete old containers'){
       steps{
+        sh 'docker stop EmppMysql || true'
+        sh 'docker rm EmppMysql || true'
         sh 'docker stop EmppSpring || true'
         sh 'docker rm EmppSpring || true'
         sh 'docker stop EmppAngular || true'
@@ -25,6 +27,12 @@ pipeline{
               sh 'docker network create EmppNetwork || true'
       }
     }
+     stage('deploy mysql'){
+       steps {
+         sh'docker pull mysql:latest'
+         sh'docker run -d --name EmppMysql -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql:latest'
+       }
+     }
      stage('deploy spring'){
       steps {
         sh 'docker run -d --network EmppNetwork -p 8080:8080 --name EmppSpring spring-empp'
