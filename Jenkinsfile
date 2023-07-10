@@ -12,12 +12,12 @@ pipeline{
     }
     stage('build spring'){
       steps{
-        sh 'docker build -t spring-empp ./springboot2-jpa-crud-example/'
+        sh 'docker build -t spring-empp ./springboot-backend/'
       }
     } 
     stage('build angular'){
         steps{
-          sh 'docker build -t angular-empp ./angular8-springboot-client/'
+          sh 'docker build -t angular-empp ./angular-frontend/'
         }
       }
     stage('create network'){
