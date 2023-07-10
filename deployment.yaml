@@ -62,9 +62,6 @@ spec:
               value: root
             - name: MYSQL_DATABASE
               value: employee_management_system
-          volumeMounts:
-            - name: mysql-data
-              mountPath: /var/lib/mysql
 ---
 apiVersion: v1
 kind: Service
@@ -89,7 +86,7 @@ spec:
   - protocol: TCP
     port: 8080
     targetPort: 8080
-  type: Cluster IP
+  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
@@ -102,4 +99,4 @@ spec:
   - protocol: TCP
     port: 3306
     targetPort: 3306
-  type: Cluster IP
+  type: ClusterIP
