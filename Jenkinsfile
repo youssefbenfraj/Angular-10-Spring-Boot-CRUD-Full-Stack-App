@@ -1,17 +1,6 @@
 pipeline{
   agent any
   stages{
-    stage('delete old containers'){
-      steps{
-        sh 'docker stop EmppMysql || true'
-        sh 'docker rm EmppMysql || true'
-        sh 'docker stop EmppSpring || true'
-        sh 'docker rm EmppSpring || true'
-        sh 'docker stop EmppAngular || true'
-        sh 'docker rm EmppAngular || true'
-        sh 'docker network rm -f EmppNetwork || true'
-      }
-    }
     stage('build spring'){
       steps{
         sh 'docker build -t spring-empp ./springboot-backend/'
@@ -22,25 +11,21 @@ pipeline{
           sh 'docker build -t angular-empp ./angular-frontend/'
         }
       }
-    stage('create network'){
+    stage('push to hub'){
       steps{
-              sh 'docker network create EmppNetwork || true'
+          withDockerRegistry(credentialsId: 'DHToken', url: 'https://index.docker.io/v1/') {
+            sh 'docker tag angular-empp wetmonkey/spring-empp'
+            sh 'docker tag angular-empp wetmonkey/angular-empp'
+            sh 'docker push wetmonkey/spring-empp:latest'
+            sh 'docker push wetmonkey/angular-empp:latest'
+          }
       }
     }
-     stage('deploy mysql'){
-       steps {
-         sh'docker pull mysql:latest'
-         sh'docker run -d --network EmppNetwork -p 3306:3306 --name EmppMysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=employee_management_system mysql:latest'
-       }
-     }
-     stage('deploy spring'){
-      steps {
-        sh 'docker run -d --network EmppNetwork -p 8080:8080 --name EmppSpring spring-empp'
-      }
-    }
-    stage('deploy angular'){
+   stage('Deployment AKS'){
       steps{
-        sh ' docker run -d --network EmppNetwork -p 4200:80 --name EmppAngular angular-empp'
+      
+         withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'K8S-Kubernet', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
+         sh ('kubectl apply -f deployment.yaml')}
       }
     }
   }
