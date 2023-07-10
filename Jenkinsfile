@@ -30,7 +30,7 @@ pipeline{
      stage('deploy mysql'){
        steps {
          sh'docker pull mysql:latest'
-         sh'docker run -d --network EmppNetwork -p 3306:3306 --name EmppMysql -e MYSQL_ROOT_PASSWORD=root mysql:latest'
+         sh'docker run -d --network EmppNetwork -p 3306:3306 --name EmppMysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=employee_management_system mysql:latest'
        }
      }
      stage('deploy spring'){
