@@ -41,16 +41,16 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deploymentDB
+  name: deploymentdb
 spec:
   selector:
     matchLabels:
-      app: EmployeeDB
+      app: Employeedb
   replicas: 1
   template:
     metadata:
       labels:
-        app: EmployeeDB
+        app: Employeedb
     spec:
       containers:
         - name: employeesql
@@ -97,7 +97,7 @@ metadata:
   name: sql-service
 spec:
   selector:
-    app: EmployeeDB
+    app: Employeedb
   ports:
   - protocol: TCP
     port: 3306
