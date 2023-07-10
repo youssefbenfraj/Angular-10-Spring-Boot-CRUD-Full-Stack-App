@@ -1,0 +1,105 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploymentfront
+spec:
+  selector:
+    matchLabels:
+      app: Employeefront
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: Employeefront
+    spec:
+      containers:
+        - name: employeeangular
+          image: wetmonkey/angular-empp:latest
+          ports:
+            - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploymentback
+spec:
+  selector:
+    matchLabels:
+      app: Employeeback
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: Employeeback
+    spec:
+      containers:
+        - name: employeespring
+          image: wetmonkey/spring-empp:latest
+          ports:
+            - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploymentDB
+spec:
+  selector:
+    matchLabels:
+      app: EmployeeDB
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: EmployeeDB
+    spec:
+      containers:
+        - name: employeesql
+          image: mysql:latest
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+            - name: MYSQL_DATABASE
+              value: employee_management_system
+          volumeMounts:
+            - name: mysql-data
+              mountPath: /var/lib/mysql
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: angular-service
+spec:
+  selector:
+    app: Employeefront
+  ports:
+  - port: 80
+    protocol: TCP
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-service
+spec:
+  selector:
+    app: Employeeback
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  type: Cluster IP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sql-service
+spec:
+  selector:
+    app: EmployeeDB
+  ports:
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306
+  type: Cluster IP
