@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: employeeangular
-          image: wetmonkey/angular-empp:latest
+          image: wetmonkey/angular-empp-ak:latest
           ports:
             - containerPort: 80
 ---
@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: employeespring
-          image: wetmonkey/spring-empp:latest
+          image: wetmonkey/spring-empp-ak:latest
           ports:
             - containerPort: 8080
 ---
