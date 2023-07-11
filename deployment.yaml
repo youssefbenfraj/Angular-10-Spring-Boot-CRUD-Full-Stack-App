@@ -104,10 +104,11 @@ spec:
   selector:
     app: Employeeback
   ports:
-  - protocol: TCP
+  - nodePort: 30136
+    protocol: TCP
     port: 8080
     targetPort: 8080
-  type: ClusterIP
+  type: NodePort
 ---
 apiVersion: v1
 kind: Service
