@@ -25,4 +25,4 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 
 # Specify the command to run your application
-CMD ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
