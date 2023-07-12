@@ -8,7 +8,7 @@ import { Employee } from './employee';
 })
 export class EmployeeService {
 
-  private baseURL = "http://192.168.146.135:8080/api/v1/employees";
+  private baseURL = "http://emppspring:8080/api/v1/employees";
 
   constructor(private httpClient: HttpClient) { }
   
