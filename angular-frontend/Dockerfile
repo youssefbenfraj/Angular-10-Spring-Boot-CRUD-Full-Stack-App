@@ -8,5 +8,5 @@ RUN npm run build --prod
 
 #stage 2
 FROM nginx:alpine
-COPY src/etc/nginx/conf.d/default.conf /etc/nginx/conf/default.conf
+COPY src/etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=node /app/dist/angular-frontend /usr/share/nginx/html
