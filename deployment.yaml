@@ -80,7 +80,7 @@ spec:
     spec:
       containers:
         - name: employeespring
-          image: wetmonkey/spring-empp-aklatest
+          image: wetmonkey/spring-empp-ak:latest
           ports:
             - containerPort: 8080
 ---
