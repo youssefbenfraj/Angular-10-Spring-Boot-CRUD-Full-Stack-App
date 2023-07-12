@@ -15,9 +15,9 @@ pipeline{
       steps{
           withDockerRegistry(credentialsId: 'DHToken', url: 'https://index.docker.io/v1/') {
             sh 'docker tag empp-spring wetmonkey/emppback-aks:3'
-            sh 'docker tag empp-angular wetmonkey/emppfront-aks:2'
+            sh 'docker tag empp-angular wetmonkey/emppfront-aks:3'
             sh 'docker push wetmonkey/emppback-aks:3'
-            sh 'docker push wetmonkey/emppfront-aks:2'
+            sh 'docker push wetmonkey/emppfront-aks:3'
           }
       }
     }
