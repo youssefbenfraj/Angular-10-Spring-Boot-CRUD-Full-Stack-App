@@ -14,10 +14,10 @@ pipeline{
     stage('push to hub'){
       steps{
           withDockerRegistry(credentialsId: 'DHToken', url: 'https://index.docker.io/v1/') {
-            sh 'docker tag empp-spring wetmonkey/emppback-aks:9'
-            sh 'docker tag empp-angular wetmonkey/emppfront-aks:9'
-            sh 'docker push wetmonkey/emppback-aks:9'
-            sh 'docker push wetmonkey/emppfront-aks:9'
+            sh 'docker tag empp-spring wetmonkey/emppback-aks:10'
+            sh 'docker tag empp-angular wetmonkey/emppfront-aks:10'
+            sh 'docker push wetmonkey/emppback-aks:10'
+            sh 'docker push wetmonkey/emppfront-aks:10'
           }
       }
     }
