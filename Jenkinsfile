@@ -3,12 +3,12 @@ pipeline{
   stages{
     stage('build spring'){
       steps{
-        sh 'docker build -t emppspring ./springboot-backend/'
+        sh 'sudo docker build -t emppspring ./springboot-backend/'
       }
     } 
     stage('build angular'){
         steps{
-          sh 'docker build -t emppangular ./angular-frontend/'
+          sh 'sudo docker build -t emppangular ./angular-frontend/'
         }
       }
     stage('push to hub'){
