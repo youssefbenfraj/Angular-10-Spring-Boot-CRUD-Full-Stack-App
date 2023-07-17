@@ -60,7 +60,7 @@ spec:
     spec:
       containers:
         - name: employeeangular
-          image: wetmonkey/emppfront-aks:18
+          image: wetmonkey/emppfront-aks:19
           ports:
             - containerPort: 80
 ---
@@ -80,7 +80,7 @@ spec:
     spec:
       containers:
         - name: employeespring
-          image: wetmonkey/emppback-aks:18
+          image: wetmonkey/emppback-aks:19
           ports:
             - containerPort: 8080
 ---
@@ -93,6 +93,7 @@ spec:
     app: Employeefront
   ports:
   - port: 80
+    targetPort: 80
     protocol: TCP
   type: LoadBalancer
 ---
