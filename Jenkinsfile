@@ -3,21 +3,21 @@ pipeline{
   stages{
     stage('build spring'){
       steps{
-        sh 'sudo docker build -t emppl-spring ./springboot-backend/'
+        sh 'docker build -t emppp-spring ./springboot-backend/'
       }
     } 
     stage('build angular'){
         steps{
-          sh 'sudo docker build -t emppl-angular ./angular-frontend/'
+          sh 'docker build -t emppp-angular ./angular-frontend/'
         }
       }
     stage('push to hub'){
       steps{
           withDockerRegistry(credentialsId: 'DHub', url: 'https://index.docker.io/v1/') {
-            sh 'sudo docker tag emppl-spring wetmonkey/emppback-aks:20'
-            sh 'sudo docker tag emppl-angular wetmonkey/emppfront-aks:20'
-            sh 'sudo docker push wetmonkey/emppback-aks:20'
-            sh 'sudo docker push wetmonkey/emppfront-aks:20'
+            sh 'docker tag emppp-spring wetmonkey/emppback-aks:21'
+            sh 'docker tag emppp-angular wetmonkey/emppfront-aks:21'
+            sh 'docker push wetmonkey/emppback-aks:21'
+            sh 'docker push wetmonkey/emppfront-aks:21'
           }
       }
     }
