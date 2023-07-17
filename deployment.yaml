@@ -15,18 +15,26 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deploymentdb
+  name: deployment
 spec:
   selector:
     matchLabels:
-      app: Employeedb
+      app: Employee
   replicas: 1
   template:
     metadata:
       labels:
-        app: Employeedb
+        app: Employee
     spec:
       containers:
+        - name: employeeangular
+          image: wetmonkey/emppfront-aks:21
+          ports:
+            - containerPort: 80
+        - name: employeespring
+          image: wetmonkey/emppback-aks:21
+          ports:
+            - containerPort: 8080
         - name: employeesql
           image: mysql:latest
           ports:
@@ -42,47 +50,7 @@ spec:
       volumes:
       - name: mysql-persistent-storage # Obtaining 'vloume' from PVC
         persistentVolumeClaim:
-          claimName: mysql-pv-claim
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: deploymentfront
-spec:
-  selector:
-    matchLabels:
-      app: Employeefront
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: Employeefront
-    spec:
-      containers:
-        - name: employeeangular
-          image: wetmonkey/emppfront-aks:21
-          ports:
-            - containerPort: 80
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: deploymentback
-spec:
-  selector:
-    matchLabels:
-      app: Employeeback
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: Employeeback
-    spec:
-      containers:
-        - name: employeespring
-          image: wetmonkey/emppback-aks:21
-          ports:
-            - containerPort: 8080
+          claimName: mysql-pv-claim      
 ---
 apiVersion: v1
 kind: Service
@@ -90,35 +58,9 @@ metadata:
   name: angular-service
 spec:
   selector:
-    app: Employeefront
+    app: Employee
   ports:
   - port: 80
     targetPort: 80
     protocol: TCP
   type: LoadBalancer
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: spring-service
-spec:
-  selector:
-    app: Employeeback
-  ports:
-  - protocol: TCP
-    port: 8080
-    targetPort: 8080
-  type: ClusterIP
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: sql-service
-spec:
-  selector:
-    app: Employeedb
-  ports:
-  - protocol: TCP
-    port: 3306
-    targetPort: 3306
-  type: ClusterIP
