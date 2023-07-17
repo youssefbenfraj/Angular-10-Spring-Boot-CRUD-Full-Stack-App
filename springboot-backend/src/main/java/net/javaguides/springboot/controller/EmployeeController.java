@@ -20,7 +20,7 @@ import net.javaguides.springboot.exception.ResourceNotFoundException;
 import net.javaguides.springboot.model.Employee;
 import net.javaguides.springboot.repository.EmployeeRepository;
 
-@CrossOrigin(origins = "http://20.242.159.57")
+@CrossOrigin(origins = "http://employeeangular")
 @RestController
 @RequestMapping("/api/v1/")
 public class EmployeeController {
