@@ -28,11 +28,11 @@ spec:
     spec:
       containers:
         - name: employeeangular
-          image: wetmonkey/emppfront-aks:21
+          image: wetmonkey/emppfront-aks:22
           ports:
             - containerPort: 80
         - name: employeespring
-          image: wetmonkey/emppback-aks:21
+          image: wetmonkey/emppback-aks:22
           ports:
             - containerPort: 8080
         - name: employeesql
