@@ -16,8 +16,8 @@ pipeline{
           withDockerRegistry(credentialsId: 'DHub', url: 'https://index.docker.io/v1/') {
             sh 'docker tag emppp-spring wetmonkey/emppback-aks:25'
             sh 'docker tag emppp-angular wetmonkey/emppfront-aks:25'
-            sh 'docker push wetmonkey/emppback-aks:24'
-            sh 'docker push wetmonkey/emppfront-aks:24'
+            sh 'docker push wetmonkey/emppback-aks:25'
+            sh 'docker push wetmonkey/emppfront-aks:25'
           }
       }
     }
