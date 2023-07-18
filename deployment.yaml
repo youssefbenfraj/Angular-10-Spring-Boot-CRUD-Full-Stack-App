@@ -3,6 +3,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim # name of PVC essential for identifying the storage data 
+  namespace: empp-application
   labels:
     app: Employeedb
 spec:
@@ -15,26 +16,19 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: deployment
+  name: deploymentdb
+  namespace: empp-application
 spec:
   selector:
     matchLabels:
-      app: Employee
+      app: Employeedb
   replicas: 1
   template:
     metadata:
       labels:
-        app: Employee
+        app: Employeedb
     spec:
       containers:
-        - name: employeeangular
-          image: wetmonkey/emppfront-aks:24
-          ports:
-            - containerPort: 80
-        - name: employeespring
-          image: wetmonkey/emppback-aks:24
-          ports:
-            - containerPort: 8080
         - name: employeesql
           image: mysql:latest
           ports:
@@ -50,17 +44,88 @@ spec:
       volumes:
       - name: mysql-persistent-storage # Obtaining 'vloume' from PVC
         persistentVolumeClaim:
-          claimName: mysql-pv-claim      
+          claimName: mysql-pv-claim
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploymentfront
+  namespace: empp-application
+spec:
+  selector:
+    matchLabels:
+      app: Employeefront
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: Employeefront
+    spec:
+      containers:
+        - name: employeeangular
+          image: wetmonkey/emppfront-aks:25
+          ports:
+            - containerPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploymentback
+  namespace: empp-application
+spec:
+  selector:
+    matchLabels:
+      app: Employeeback
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: Employeeback
+    spec:
+      containers:
+        - name: employeespring
+          image: wetmonkey/emppback-aks:25
+          ports:
+            - containerPort: 8080
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: angular-service
+  namespace: empp-application
 spec:
   selector:
-    app: Employee
+    app: Employeefront
   ports:
   - port: 80
     targetPort: 80
     protocol: TCP
   type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-service
+  namespace: empp-application
+spec:
+  selector:
+    app: Employeeback
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sql-service
+  namespace: empp-application
+spec:
+  selector:
+    app: Employeedb
+  ports:
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306
+  type: ClusterIP
