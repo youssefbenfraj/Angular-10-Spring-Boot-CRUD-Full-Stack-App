@@ -8,7 +8,7 @@ import { Employee } from './employee';
 })
 export class EmployeeService {
 
-  private baseURL = "/api/v1/employees";
+  private baseURL = "//api/v1/employees";
 
   constructor(private httpClient: HttpClient) { }
   
