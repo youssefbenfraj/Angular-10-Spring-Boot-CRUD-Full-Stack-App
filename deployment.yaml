@@ -63,7 +63,7 @@ spec:
     spec:
       containers:
         - name: employeeangular
-          image: wetmonkey/emppfront-aks:31
+          image: wetmonkey/emppfront-aks:32
           ports:
             - containerPort: 80
 ---
@@ -84,7 +84,7 @@ spec:
     spec:
       containers:
         - name: employeespring
-          image: wetmonkey/emppback-aks:31
+          image: wetmonkey/emppback-aks:32
           ports:
             - containerPort: 8080
 ---
