@@ -132,10 +132,7 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.azure.com/use-osm-mtls: "true"
-    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-    nginx.ingress.kubernetes.io/configuration-snippet: |2-
-
-      proxy_ssl_name "default.hello-web-app-routing.cluster.local";
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
     nginx.ingress.kubernetes.io/proxy-ssl-secret: kube-system/osm-ingress-client-cert
     nginx.ingress.kubernetes.io/proxy-ssl-verify: "on"
   name: my-ingress
