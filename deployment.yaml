@@ -127,13 +127,21 @@ spec:
     port: 3306
     targetPort: 3306
 ---
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: my-ingress
   annotations:
-   kubernetes.io/ingress.class: ingress-nginx
+    kubernetes.azure.com/use-osm-mtls: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    nginx.ingress.kubernetes.io/configuration-snippet: |2-
+
+      proxy_ssl_name "default.hello-web-app-routing.cluster.local";
+    nginx.ingress.kubernetes.io/proxy-ssl-secret: kube-system/osm-ingress-client-cert
+    nginx.ingress.kubernetes.io/proxy-ssl-verify: "on"
+  name: my-ingress
+  namespace: empp-application
 spec:
+  ingressClassName: webapprouting.kubernetes.azure.com
   rules:
     - http:
         paths:
