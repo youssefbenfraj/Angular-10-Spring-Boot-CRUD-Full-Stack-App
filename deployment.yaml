@@ -132,16 +132,13 @@ kind: IngressClass
 metadata:
   name: ingressc
 spec:
-  controller: addon-http-application-routing-nginx-ingress-controller
+  controller: nginx-ingress-controller
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    kubernetes.azure.com/use-osm-mtls: "true"
     nginx.ingress.kubernetes.io/backend-protocol: HTTP
-    nginx.ingress.kubernetes.io/proxy-ssl-secret: kube-system/osm-ingress-client-cert
-    nginx.ingress.kubernetes.io/proxy-ssl-verify: "on"
   name: my-ingress
   namespace: empp-application
 spec:
