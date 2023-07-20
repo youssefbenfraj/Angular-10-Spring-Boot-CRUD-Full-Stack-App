@@ -17,7 +17,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deploymentdb
-  namespace: empp-application
+  namespace: ingress-controller
 spec:
   selector:
     matchLabels:
@@ -50,7 +50,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deploymentfront
-  namespace: empp-application
+  namespace: ingress-controller
 spec:
   selector:
     matchLabels:
@@ -71,7 +71,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deploymentback
-  namespace: empp-application
+  namespace: ingress-controller
 spec:
   selector:
     matchLabels:
@@ -92,7 +92,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: angular-service
-  namespace: empp-application
+  namespace: ingress-controller
 spec:
   selector:
     app: Employeefront
@@ -105,7 +105,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: spring-service
-  namespace: empp-application
+  namespace: ingress-controller
 spec:
   selector:
     app: Employeeback
@@ -118,7 +118,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: sql-service
-  namespace: empp-application
+  namespace: ingress-controller
 spec:
   selector:
     app: Employeedb
