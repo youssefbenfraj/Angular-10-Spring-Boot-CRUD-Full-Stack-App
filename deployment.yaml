@@ -133,7 +133,7 @@ metadata:
   name: my-ingress
   namespace: empp-application
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    app.kubernetes.io/rewrite-target: /
 spec:
   rules:
     - http:
