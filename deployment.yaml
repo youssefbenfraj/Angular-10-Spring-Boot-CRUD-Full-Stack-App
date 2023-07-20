@@ -3,7 +3,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim # name of PVC essential for identifying the storage data 
-  namespace: ingress-controller
+  namespace: empp-application
   labels:
     app: Employeedb
 spec:
@@ -17,7 +17,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deploymentdb
-  namespace: ingress-controller
+  namespace: empp-application
 spec:
   selector:
     matchLabels:
@@ -50,7 +50,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deploymentfront
-  namespace: ingress-controller
+  namespace: empp-application
 spec:
   selector:
     matchLabels:
@@ -71,7 +71,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: deploymentback
-  namespace: ingress-controller
+  namespace: empp-application
 spec:
   selector:
     matchLabels:
@@ -92,7 +92,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: angular-service
-  namespace: ingress-controller
+  namespace: empp-application
 spec:
   selector:
     app: Employeefront
@@ -105,7 +105,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: spring-service
-  namespace: ingress-controller
+  namespace: empp-application
 spec:
   selector:
     app: Employeeback
@@ -118,7 +118,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: sql-service
-  namespace: ingress-controller
+  namespace: empp-application
 spec:
   selector:
     app: Employeedb
@@ -131,7 +131,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: my-ingress
-  namespace: ingress-controller
+  namespace: empp-application
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
