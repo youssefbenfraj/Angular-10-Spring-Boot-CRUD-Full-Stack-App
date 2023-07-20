@@ -24,7 +24,7 @@ pipeline{
    stage('Deployment AKS'){
       steps{
       
-         withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'K8S-Kubernet', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
+         withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'AKS-Ingress', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
          sh ('kubectl apply -f deployment.yaml')}
       }
     }
