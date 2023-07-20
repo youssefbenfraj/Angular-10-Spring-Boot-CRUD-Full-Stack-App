@@ -138,7 +138,6 @@ metadata:
   name: my-ingress
   namespace: empp-application
 spec:
-  ingressClassName: webapprouting.kubernetes.azure.com
   rules:
     - http:
         paths:
