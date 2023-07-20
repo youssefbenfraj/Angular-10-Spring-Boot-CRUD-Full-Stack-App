@@ -131,9 +131,6 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: my-ingress
-  namespace: empp-application
-  annotations:
-    app.kubernetes.io/rewrite-target: /
 spec:
   rules:
     - http:
