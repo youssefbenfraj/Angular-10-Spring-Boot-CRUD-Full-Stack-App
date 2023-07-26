@@ -1,31 +1,19 @@
 pipeline{
   agent any
   stages{
-    stage('build spring'){
-      steps{
-        sh 'docker build -t emppp-spring ./springboot-backend/'
-      }
-    } 
-    stage('build angular'){
-        steps{
-          sh 'docker build -t emppp-angular ./angular-frontend/'
+    stage('Terraform init') {
+            steps {
+                sh 'terraform init -chdir=./terraform'
+            }
         }
-      }
-    stage('push to hub'){
-      steps{
-          withDockerRegistry(credentialsId: 'DHub', url: 'https://index.docker.io/v1/') {
-            sh 'docker tag emppp-spring wetmonkey/emppback-aks:41'
-            sh 'docker tag emppp-angular wetmonkey/emppfront-aks:41'
-            sh 'docker push wetmonkey/emppback-aks:41'
-            sh 'docker push wetmonkey/emppfront-aks:41'
-          }
-      }
-    }
-   stage('Deployment AKS'){
-      steps{
-      
-         withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'AKS-Ingress', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
-         sh ('kubectl apply -f deployment.yaml')}
+    stage('Terraform apply') {
+            steps {
+                sh 'terraform apply --auto-approve '
+            }
+        }
+    stage('Deployment AKS'){
+      steps{ 
+         sh 'kubectl apply -f deployment.yaml'
       }
     }
   }
