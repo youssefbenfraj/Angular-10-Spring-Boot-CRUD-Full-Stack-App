@@ -3,7 +3,7 @@ pipeline{
   stages{
     stage('Terraform init') {
             steps {
-                sh 'terraform init -chdir=./terraform'
+                sh 'terraform init'
             }
         }
     stage('Terraform apply') {
