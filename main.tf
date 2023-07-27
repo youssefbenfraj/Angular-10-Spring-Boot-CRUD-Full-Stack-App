@@ -38,11 +38,6 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     network_plugin    = "kubenet"
     load_balancer_sku = "standard"
   }
-
-  identity {
-    type = "SystemAssigned"
-    identity_ids = [var.managed_identity_id]
-  }
 }
 
 output "kube_config" {
