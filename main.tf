@@ -33,7 +33,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 
   identity {
     type = "SystemAssigned"
-    identity_id = da1c0cdf-8f41-4998-acd8-0f3559ec47ff
+    identity_ids = da1c0cdf-8f41-4998-acd8-0f3559ec47ff
   }
 }
 
