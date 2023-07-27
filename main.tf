@@ -4,6 +4,10 @@ provider "azurerm" {
   use_msi        = true
 }
 
+variable "managed_identity_id" {
+  type = string
+}
+
 resource "azurerm_resource_group" "aks_rg" {
   name     = "Jenkins-Terraform-rg"
   location = "East US"
