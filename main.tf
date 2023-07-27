@@ -6,7 +6,7 @@ provider "azurerm" {
 
 variable "managed_identity_id" {
   type = string
-  default = "da1c0cdf-8f41-4998-acd8-0f3559ec47ff"
+  default = "aaae7bd3-001d-4e0d-b95f-1821a780b047"
 }
 
 resource "azurerm_resource_group" "aks_rg" {
@@ -33,7 +33,7 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
 
   identity {
     type = "SystemAssigned"
-    identity_ids = "da1c0cdf-8f41-4998-acd8-0f3559ec47ff"
+    identity_ids = [var.managed_identity_id]
   }
 }
 
