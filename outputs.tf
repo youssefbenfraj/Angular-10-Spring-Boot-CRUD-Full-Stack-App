@@ -1,9 +1,9 @@
 output "resource_group_name" {
-  value = azurerm_resource_group.rg.name
+  value = azurerm_resource_group.Jenkins-Terraform-rg.name
 }
 
 output "kubernetes_cluster_name" {
-  value = azurerm_kubernetes_cluster.k8s.name
+  value = azurerm_kubernetes_cluster.k8s-Jenk-Terra.name
 }
 
 output "client_certificate" {
