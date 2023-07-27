@@ -6,6 +6,7 @@ provider "azurerm" {
 
 variable "managed_identity_id" {
   type = string
+  default = "da1c0cdf-8f41-4998-acd8-0f3559ec47ff"
 }
 
 resource "azurerm_resource_group" "aks_rg" {
