@@ -29,8 +29,9 @@ pipeline{
                         returnStdout: true
                     ).trim()
               echo "CA_CERTIFICATE: $ca_certificate"
-              echo "CLUSTER_NAME: $cluster_name" }
-              withKubeConfig(caCertificate: ca_certificate, clusterName: cluster_name, contextName: '', credentialsId: '', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
+              echo "CLUSTER_NAME: $cluster_name" 
+                } 
+          withKubeConfig(caCertificate: ca_certificate, clusterName: cluster_name, contextName: '', credentialsId: '', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
          sh ('kubectl apply -f deployment.yaml')}
       }
     }
