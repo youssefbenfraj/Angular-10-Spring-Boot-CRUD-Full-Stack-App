@@ -18,10 +18,12 @@ pipeline{
         }
      stage('Get AKS Cluster Credentials') { 
        steps{
-               sh ' cat terraform_output.txt'
-          withKubeConfig(contextName: terraform_output.txt ) {
+         script { 
+         def kubeConfigContent = readFile('terraform_output.txt').trim()
+         withKubeConfig(contextName: kubeConfigContent ) {
          sh ('kubectl apply -f deployment.yaml')}
-      }
+          }
+       }
     }
   }
 }
