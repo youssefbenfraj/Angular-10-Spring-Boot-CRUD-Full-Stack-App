@@ -12,9 +12,10 @@ pipeline{
                 sh 'terraform apply --auto-approve'
             }
         }
-    stage('Deployment AKS'){
-      steps{ 
-         sh 'kubectl apply -f deployment.yaml'
+     stage('Get AKS Cluster Credentials') {
+          steps {
+              sh 'az aks get-credentials --resource-group Terraform-Demo --name Terraform-cluster'
+              sh 'kubectl apply -f deployment.yaml'
       }
     }
   }
