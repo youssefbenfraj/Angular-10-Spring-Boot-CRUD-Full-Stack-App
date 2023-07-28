@@ -16,7 +16,7 @@ provider "azurerm" {
 
 variable "managed_identity_id" {
   type    = string
-  default = "aaae7bd3-001d-4e0d-b95f-1821a780b047"
+  default = "subscriptions/c7942088-7089-416c-97f1-d5c5d155a279/resourceGroups/Jenkins-Demo/providers/Microsoft.ManagedIdentity/userAssignedIdentities/aaae7bd3-001d-4e0d-b95f-1821a780b047"
 }
 
 resource "azurerm_resource_group" "aks_rg" {
