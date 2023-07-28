@@ -15,7 +15,7 @@ provider "azurerm" {
 
 variable "managed_identity_id" {
   type = string
-  default = "03861765-f705-46b4-b009-74a79e0f203a"
+  default = "aaae7bd3-001d-4e0d-b95f-1821a780b047"
 }
 
 resource "azurerm_resource_group" "aks_rg" {
