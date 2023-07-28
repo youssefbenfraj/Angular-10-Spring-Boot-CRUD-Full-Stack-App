@@ -19,7 +19,7 @@ variable "managed_identity_id" {
 }
 
 resource "azurerm_resource_group" "aks_rg" {
-  name     = "Jenkins-Terraform-rg"
+  name     = "Jenkins-Demo"
   location = "East US"
 }
 
