@@ -19,7 +19,7 @@ pipeline{
      stage('Get AKS Cluster Credentials') { 
        steps{
                sh ' cat terraform_output.txt'
-          withKubeConfig(contents: terraform_output.txt ) {
+          withKubeConfig(contextName: terraform_output.txt ) {
          sh ('kubectl apply -f deployment.yaml')}
       }
     }
