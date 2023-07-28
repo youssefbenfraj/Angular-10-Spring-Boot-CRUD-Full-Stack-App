@@ -34,6 +34,10 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     name       = "agentpool"
     node_count = 1
     vm_size    = "Standard_DS2_v2"
+identity {
+      type        = "UserAssigned"
+      identity_ids = [var.managed_identity_id]
+    }
   }
 
   network_profile {
