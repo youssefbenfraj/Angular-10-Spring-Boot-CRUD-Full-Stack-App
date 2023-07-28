@@ -21,7 +21,7 @@ pipeline{
                sh ' cat terraform_output.txt'
         script {
               // Read the contents of the file using the readFile step
-                    def kubeConfigContent = readFile(file: 'kube_config_output.txt')
+                    def kubeConfigContent = readFile(file: 'terraform_output.txt')
 
                     // Extract the values from the kubeConfigContent variable using regex
                     def ca_certificate = (kubeConfigContent =~ /(?<=certificate-authority-data: ).*/)[0]
