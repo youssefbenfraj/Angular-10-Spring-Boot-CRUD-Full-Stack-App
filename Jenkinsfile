@@ -22,6 +22,7 @@ pipeline{
          def kubeConfigContent = readFile('terraform_output.txt').trim()
          withKubeConfig(contextName: kubeConfigContent ) {
            sh ('kubectl config current-context')
+           sh ('kubectl config get-contexts')
            sh ('kubectl apply -f deployment.yaml  --context current-context ')}
           }
        }
