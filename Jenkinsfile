@@ -20,14 +20,13 @@ pipeline{
        steps{
                sh ' cat terraform_output.txt'
         script {
-              def ca_certificate = sh(
-                        script: "grep -oP '(?<=certificate-authority-data: ).*' terraform_output.txt | base64 -d",
-                        returnStdout: true
-                    ).trim()
-              def cluster_name = sh(
-                        script: "grep -oP '(?<=name: ).*' terraform_output.txt",
-                        returnStdout: true
-                    ).trim()
+              // Read the contents of the file using the readFile step
+                    def kubeConfigContent = readFile(file: 'kube_config_output.txt')
+
+                    // Extract the values from the kubeConfigContent variable using regex
+                    def ca_certificate = (kubeConfigContent =~ /(?<=certificate-authority-data: ).*/)[0]
+                    def cluster_name = (kubeConfigContent =~ /(?<=name: ).*/)[0]
+
               echo "CA_CERTIFICATE: $ca_certificate"
               echo "CLUSTER_NAME: $cluster_name" 
                 } 
