@@ -14,11 +14,11 @@ pipeline{
               sh 'echo "${KUBE_CONFIG_CONTENT}" > kubeconfig'
             }
         }
-     stage('Get AKS Cluster Credentials') {
-       environment {
-        KUBECONFIG = "${env.WORKSPACE}/kubeconfig"
-            }  
+     stage('Get AKS Cluster Credentials') { 
        steps{
+                script {
+                    env.KUBECONFIG = "${env.WORKSPACE}/kubeconfig"
+                }
               sh 'kubectl apply -f deployment.yaml'
       }
     }
