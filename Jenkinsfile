@@ -19,6 +19,7 @@ pipeline{
                 script {
                     env.KUBECONFIG = "${env.WORKSPACE}/kubeconfig"
                 }
+               sh ' cat kubeconfig'
               sh 'kubectl apply -f deployment.yaml'
       }
     }
