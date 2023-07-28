@@ -9,7 +9,7 @@ pipeline{
         }
     stage('Terraform apply') {
             steps {
-                sh 'terraform apply --auto-approve -var="managed_identity_id=da1c0cdf-8f41-4998-acd8-0f3559ec47ff"'
+                sh 'terraform apply --auto-approve'
             }
         }
     stage('Deployment AKS'){
