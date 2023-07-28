@@ -39,9 +39,4 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     network_plugin    = "kubenet"
     load_balancer_sku = "standard"
   }
-identity {
-   type        = "UserAssigned"
-    identity_ids = "/subscriptions/c7942088-7089-416c-97f1-d5c5d155a279/resourceGroups/Jenkins-Demo/"
-
-  }
 }
