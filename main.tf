@@ -53,4 +53,5 @@ output "kube_config" {
 }
 output "cluster_ca_certificate" {
   value = azurerm_kubernetes_cluster.aks_cluster.kube_config.0.cluster_ca_certificate
+  sensitive = true
 }
