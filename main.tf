@@ -29,7 +29,6 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
   location            = azurerm_resource_group.aks_rg.location
   resource_group_name = azurerm_resource_group.aks_rg.name
   dns_prefix          = "Terraform-cluster-dns"
-  http_application_routing_enabled = true
 
   default_node_pool {
     name       = "agentpool"
@@ -41,6 +40,8 @@ resource "azurerm_kubernetes_cluster" "aks_cluster" {
     network_plugin    = "kubenet"
     load_balancer_sku = "standard"
   }
+
+   http_application_routing_enabled = true
 
 identity {
       type        = "SystemAssigned"
