@@ -1,20 +1,21 @@
 terraform {
   required_providers {
     azurerm = {
-      source = "hashicorp/azurerm"
+      source  = "hashicorp/azurerm"
       version = "3.66.0"
     }
   }
 }
+
 provider "azurerm" {
-  features {}
- subscription_id = "c7942088-7089-416c-97f1-d5c5d155a279"
- tenant_id = "7917799a-9669-4e41-b87d-4c14fefd7c41"
-  use_msi        = true
+  features        {}
+  subscription_id = "c7942088-7089-416c-97f1-d5c5d155a279"
+  tenant_id       = "7917799a-9669-4e41-b87d-4c14fefd7c41"
+  use_msi         = true
 }
 
 variable "managed_identity_id" {
-  type = string
+  type    = string
   default = "aaae7bd3-001d-4e0d-b95f-1821a780b047"
 }
 
