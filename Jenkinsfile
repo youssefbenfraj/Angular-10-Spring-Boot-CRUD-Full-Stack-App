@@ -19,18 +19,7 @@ pipeline{
      stage('Get AKS Cluster Credentials') { 
        steps{
                sh ' cat terraform_output.txt'
-        script {
-              // Read the contents of the file using the readFile step
-                    def kubeConfigContent = readFile(file: 'terraform_output.txt')
-
-                    // Extract the values from the kubeConfigContent variable using regex
-                    def ca_certificate = (kubeConfigContent =~ /(?<=certificate-authority-data: ).*/)[0]
-                    def cluster_name = (kubeConfigContent =~ /(?<=name: ).*/)[0]
-
-              echo "CA_CERTIFICATE: $ca_certificate"
-              echo "CLUSTER_NAME: $cluster_name" 
-                } 
-          withKubeConfig(caCertificate: ca_certificate, clusterName: cluster_name, contextName: '', credentialsId: '', namespace: '', restrictKubeConfigAccess: false, serverUrl: '') {
+          withKubeConfig(contents: terraform_output.txt ) {
          sh ('kubectl apply -f deployment.yaml')}
       }
     }
