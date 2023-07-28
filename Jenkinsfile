@@ -10,16 +10,18 @@ pipeline{
     stage('Terraform apply') {
             steps {
                 sh 'terraform apply --auto-approve'
-               sh 'KUBE_CONFIG_CONTENT=$(terraform output kube_config)'
-              sh 'cat <<EOF > kubeconfig\n${KUBE_CONFIG_CONTENT}\nEOF'
+                script {
+                    def terraformOutput = sh(returnStdout: true, script: 'terraform output kube_config')
+                    writeFile(file: 'terraform_output.txt', text: terraformOutput)
+                }
             }
         }
      stage('Get AKS Cluster Credentials') { 
        steps{
                 script {
-                    env.KUBECONFIG = "${env.WORKSPACE}/kubeconfig"
+                    env.KUBECONFIG = "${env.WORKSPACE}/terraform_output.txt"
                 }
-               sh ' cat kubeconfig'
+               sh ' cat terraform_output.txt'
               sh 'kubectl apply -f deployment.yaml'
       }
     }
