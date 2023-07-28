@@ -11,7 +11,7 @@ pipeline{
             steps {
                 sh 'terraform apply --auto-approve'
                sh 'KUBE_CONFIG_CONTENT=$(terraform output kube_config)'
-              sh 'echo "${KUBE_CONFIG_CONTENT}" > kubeconfig'
+              sh 'cat <<EOF > kubeconfig\n${KUBE_CONFIG_CONTENT}\nEOF'
             }
         }
      stage('Get AKS Cluster Credentials') { 
