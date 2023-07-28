@@ -21,11 +21,11 @@ pipeline{
                sh ' cat terraform_output.txt'
         script {
               def ca_certificate = sh(
-                        script: "grep -oP '(?<=certificate-authority-data: ).*' kube_config_output.txt | base64 -d",
+                        script: "grep -oP '(?<=certificate-authority-data: ).*' terraform_output.txt | base64 -d",
                         returnStdout: true
                     ).trim()
               def cluster_name = sh(
-                        script: "grep -oP '(?<=name: ).*' kube_config_output.txt",
+                        script: "grep -oP '(?<=name: ).*' terraform_output.txt",
                         returnStdout: true
                     ).trim()
               echo "CA_CERTIFICATE: $ca_certificate"
