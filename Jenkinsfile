@@ -13,6 +13,8 @@ pipeline{
                 script {
                     def terraformOutput = sh(returnStdout: true, script: 'terraform output kube_config')
                     writeFile(file: 'terraform_output.txt', text: terraformOutput)
+                  def terraformCertifOutput = sh(returnStdout: true, script: 'terraform output cluster_ca_certificate')
+                    writeFile(file: 'ca_certificate_output.txt', text: terraformCertifOutput)
                 }
             }
         }
@@ -20,7 +22,8 @@ pipeline{
        steps{
          script { 
          def kubeConfigContent = readFile('terraform_output.txt').trim()
-         withKubeConfig(contextName: kubeConfigContent ) {
+         def CaCertifContent = readFile('ca_certificate_output.txt').trim()
+         withKubeConfig(contextName: kubeConfigContent , caCertificate: CaCertifiContent) {
            sh ('kubectl apply -f deployment.yaml')}
           }
        }
