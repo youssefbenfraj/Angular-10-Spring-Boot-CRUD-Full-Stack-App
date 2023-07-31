@@ -23,7 +23,7 @@ pipeline{
          script { 
          def kubeConfigContent = readFile('terraform_output.txt').trim()
          def CaCertifContent = readFile('ca_certificate_output.txt').trim()
-         withKubeConfig(contextName: kubeConfigContent , caCertificate: CaCertifiContent) {
+         withKubeConfig(caCertificate: CaCertifiContent ) {
            sh ('kubectl apply -f deployment.yaml')}
           }
        }
