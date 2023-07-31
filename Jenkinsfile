@@ -22,7 +22,7 @@ pipeline{
         }
      stage('Get AKS Cluster Credentials') { 
        steps{
-         withKubeConfig(credentialsId: Terra-AKS
+         withKubeConfig(credentialsId: 'Terra-AKS'
                     ){
                    sh ('kubectl apply -f deployment.yaml')
                       }
