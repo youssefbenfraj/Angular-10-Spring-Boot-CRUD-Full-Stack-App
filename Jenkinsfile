@@ -34,7 +34,8 @@ pipeline{
          def HostContent = readFile('host_output.txt').trim()
         withKubeConfig([
                     caCertificate: CaCertifContent,
-                    serverUrl: HostContent
+                    serverUrl: HostContent,
+                    contextName: kubeConfigContent
                     ]){
                    sh ('kubectl apply -f deployment.yaml')
                       }
