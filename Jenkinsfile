@@ -27,14 +27,14 @@ pipeline{
          def CaCertifContent = readFile('ca_certificate_output.txt').trim()
          def HostContent = readFile('host_output.txt').trim()
           }
-       }
-    }
-    stage ('AKS Deployment') {
-      steps {
-          
+         withKubeConfig([
+                    caCertificate: CaCertifContent,
+                    serverUrl: HostContent,
+                    contextName: kubeConfigContent
+                    ]){
                    sh ('kubectl apply -f deployment.yaml')
-                      
-      }
+                      }
+       }
     }
   }
 }
