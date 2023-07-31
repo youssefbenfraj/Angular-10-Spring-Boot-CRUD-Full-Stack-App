@@ -22,15 +22,10 @@ pipeline{
         }
      stage('Get AKS Cluster Credentials') { 
        steps{
-         script { 
-         def kubeConfigContent = readFile('terraform_output.txt').trim()
-         def CaCertifContent = readFile('ca_certificate_output.txt').trim()
-         def HostContent = readFile('host_output.txt').trim()
-          }
          withKubeConfig([
                     caCertificate:  readFile('ca_certificate_output.txt').trim(),
-                    serverUrl: HostContent,
-                    contextName: kubeConfigContent
+                    serverUrl: readFile('host_output.txt').trim(),
+                    contextName: readFile('terraform_output.txt').trim()
                     ]){
                    sh ('kubectl apply -f deployment.yaml')
                       }
