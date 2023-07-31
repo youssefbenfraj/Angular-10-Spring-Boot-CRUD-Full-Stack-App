@@ -28,7 +28,7 @@ pipeline{
          def HostContent = readFile('host_output.txt').trim()
           }
          withKubeConfig([
-                    caCertificate: CaCertifContent,
+                    caCertificate:  readFile('ca_certificate_output.txt').trim(),
                     serverUrl: HostContent,
                     contextName: kubeConfigContent
                     ]){
