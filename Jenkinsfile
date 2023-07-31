@@ -22,11 +22,8 @@ pipeline{
         }
      stage('Get AKS Cluster Credentials') { 
        steps{
-         withKubeConfig([
-                    caCertificate:  readFile('ca_certificate_output.txt').trim(),
-                    serverUrl: readFile('host_output.txt').trim(),
-                    contextName: readFile('terraform_output.txt').trim()
-                    ]){
+         withKubeConfig(credentialsId: Terra-AKS
+                    ){
                    sh ('kubectl apply -f deployment.yaml')
                       }
        }
