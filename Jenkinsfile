@@ -1,43 +1,39 @@
 pipeline{
   agent any
   stages{
-     stage('build spring'){
+    stage('delete old containers'){
       steps{
-        sh 'docker build -t emppp-spring ./springboot-backend/'
-      }
-    } 
-    stage('build angular'){
-        steps{
-          sh 'docker build -t emppp-angular ./angular-frontend/'
-        }
-      }
-    stage('push to hub'){
-      steps{
-          withDockerRegistry(credentialsId: 'DHub', url: 'https://index.docker.io/v1/') {
-            sh 'docker tag emppp-spring wetmonkey/emppback-aks:41'
-            sh 'docker tag emppp-angular wetmonkey/emppfront-aks:41'
-            sh 'docker push wetmonkey/emppback-aks:41'
-            sh 'docker push wetmonkey/emppfront-aks:41'
-          }
+        sh 'docker stop EmppMysql || true'
+        sh 'docker rm EmppMysql || true'
+        sh 'docker stop EmppSpring || true'
+        sh 'docker rm EmppSpring || true'
+        sh 'docker stop EmppAngular || true'
+        sh 'docker rm EmppAngular || true'
+        sh 'docker network rm -f EmppNetwork || true'
       }
     }
-    stage('Terraform init') {
-            steps {
-                sh 'terraform init --upgrade'
-                sh 'terraform plan'
-            }
+    stage('build images'){
+      steps{
+        sh 'docker build -t spring-empp ./springboot-backend/'
+        sh 'docker build -t angular-empp ./angular-frontend/'
         }
-    stage('Terraform apply') {
-            steps {
-              sh 'terraform apply --auto-approve'
-            }
-        }
-     stage('Get AKS Cluster Credentials') { 
-       steps{
-         withKubeConfig(credentialsId: 'Terra-AKS' ){
-              sh ('kubectl apply -f deployment.yaml')
-            }
+      }
+    stage('create network'){
+      steps{
+              sh 'docker network create EmppNetwork || true'
+      }
+    }
+     stage('deploy mysql'){
+       steps {
+         sh'docker pull mysql:latest'
+         sh'docker run -d --network EmppNetwork -p 3306:3306 --name EmppMysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=employee_management_system mysql:latest'
        }
+     }
+     stage('deploy front and backend'){
+      steps {
+        sh 'docker run -d --network EmppNetwork -p 8080:8080 --name EmppSpring spring-empp'
+        sh ' docker run -d --network EmppNetwork -p 4200:80 --name EmppAngular angular-empp'
+      }
     }
   }
 }
