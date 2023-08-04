@@ -32,7 +32,7 @@ pipeline{
               sh 'terraform apply --auto-approve'
             }
         }
-     stage('Get AKS Cluster Credentials') { 
+     stage('Deploy AKS Cluster ') { 
        steps{
          withKubeConfig(credentialsId: 'Terra-AKS' ){
               sh ('kubectl apply -f deployment.yaml')
